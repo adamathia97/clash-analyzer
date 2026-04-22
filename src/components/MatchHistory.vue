@@ -3,8 +3,8 @@ import { usePlayerStore } from '../stores/usePlayerStore'
 const playerStore = usePlayerStore()
 
 const isWin = (battle) => {
-  const playerCrowns = battle.team[0].crowns
-  const opponentCrowns = battle.opponent[0].crowns
+  const playerCrowns = battle.team?.[0]?.crowns ?? 0
+  const opponentCrowns = battle.opponent?.[0]?.crowns ?? 0
   return playerCrowns > opponentCrowns
 }
 </script>
@@ -42,8 +42,12 @@ const isWin = (battle) => {
         </div>
 
         <div class="text-right">
-          <p class="text-sm font-bold text-slate-200">{{ battle.opponent[0].name }}</p>
-          <p class="text-[10px] text-blue-400 font-mono">{{ battle.opponent[0].tag }}</p>
+          <p class="text-sm font-bold text-slate-200">
+            {{ battle.opponent?.[0]?.name || 'NPC / Boat' }}
+          </p>
+          <p class="text-[10px] text-blue-400 font-mono">
+            {{ battle.opponent?.[0]?.tag || '' }}
+          </p>
         </div>
       </div>
     </div>
