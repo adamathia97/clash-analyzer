@@ -7,7 +7,7 @@ const playerStore = usePlayerStore()
 </script>
 
 <template>
-  <div class="min-h-screen bg-slate-900 text-slate-100 font-sans selection:bg-blue-500 selection:text-white">
+  <div class="min-h-screen bg-[#0f111a] bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-slate-900 via-[#0f111a] to-black text-slate-100 ...">
     
     <header class="border-b border-slate-800 bg-slate-950/50 backdrop-blur-md sticky top-0 z-50">
       <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">

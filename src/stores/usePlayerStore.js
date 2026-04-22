@@ -2,17 +2,20 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const usePlayerStore = defineStore('player', () => {
-  // State
+  // --- State ---
   const playerTag = ref('')
   const playerData = ref(null)
-  const recentBattles = ref([])
+  const recentBattles = ref([]) // Only one declaration here
   const isLoading = ref(false)
   const error = ref(null)
 
-  // Actions
+  // --- Actions ---
   function setPlayerTag(tag) {
-    // Basic validation to ensure it starts with '#'
     playerTag.value = tag.startsWith('#') ? tag : `#${tag}`
+  }
+
+  function setRecentBattles(battles) {
+    recentBattles.value = battles
   }
 
   function clearPlayer() {
@@ -29,6 +32,7 @@ export const usePlayerStore = defineStore('player', () => {
     isLoading,
     error,
     setPlayerTag,
+    setRecentBattles,
     clearPlayer
   }
 })

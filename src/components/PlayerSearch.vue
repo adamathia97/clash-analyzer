@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { usePlayerStore } from '../stores/usePlayerStore'
-import { getPlayerProfile } from '../services/clashApi'
+import { getPlayerProfile, getPlayerBattles } from '../services/clashApi'
 
 const playerStore = usePlayerStore()
 const searchInput = ref('')
@@ -17,10 +17,18 @@ const handleSearch = async () => {
   playerStore.error = null
   
   try {
-    const response = await getPlayerProfile(cleanTag)
-    playerStore.playerData = response.data
+    const [profileRes, battleRes] = await Promise.all([
+      getPlayerProfile(cleanTag),
+      getPlayerBattles(cleanTag)
+    ])
+    
+    // Update the store using the new actions
+    playerStore.playerData = profileRes.data
+    playerStore.setRecentBattles(battleRes.data)
+    playerStore.setPlayerTag(cleanTag)
+    
   } catch (err) {
-    playerStore.error = 'Player not found. Use a valid tag like V2VUYQQ2C.'
+    playerStore.error = 'Failed to sync player data.'
   } finally {
     playerStore.isLoading = false
   }

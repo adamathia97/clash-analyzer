@@ -18,3 +18,7 @@ export const getPlayerProfile = (playerTag) => {
   // RoyaleAPI Proxy URL format: https://proxy.royaleapi.dev/v1/players/%23TAG
   return client.get(`/players/%23${playerTag}`)
 }
+
+export const getPlayerBattles = (playerTag) => {
+  return client.get(`/players/%23${playerTag}/battlelog`)
+}
