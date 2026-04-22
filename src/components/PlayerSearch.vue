@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { usePlayerStore } from '../stores/usePlayerStore'
+import { getPlayerProfile } from '../services/clashApi'
 
 const playerStore = usePlayerStore()
 const searchInput = ref('')
@@ -8,15 +9,18 @@ const searchInput = ref('')
 const handleSearch = async () => {
   if (!searchInput.value.trim()) return
   
+  // Force uppercase and remove hashtags/spaces
+  const cleanTag = searchInput.value.toUpperCase().replace(/#/g, '').trim()
+  console.log("Attempting to fetch tag:", cleanTag)
+  
   playerStore.isLoading = true
   playerStore.error = null
   
   try {
-    const response = await getPlayerProfile(searchInput.value)
+    const response = await getPlayerProfile(cleanTag)
     playerStore.playerData = response.data
-    console.log('Success:', playerStore.playerData)
   } catch (err) {
-    playerStore.error = 'Failed to fetch player. Check the tag or API key.'
+    playerStore.error = 'Player not found. Use a valid tag like V2VUYQQ2C.'
   } finally {
     playerStore.isLoading = false
   }
